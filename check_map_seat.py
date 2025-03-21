@@ -4,11 +4,11 @@ import json
 #######################################################
 ########### 아래 값 채워준 뒤 실행해주시면 됩니다. #############
 #######################################################
-prodId = ""
-pocCode = ""
-scheduleNo = ""
-cookie = ""
-slack_webhook_url = ""
+prodId = "211159"
+pocCode = "SC0002"
+scheduleNo = "100003"
+cookie = "WEBSVC.Cookie"
+slack_webhook_url = "https://w1742559983-zww464949.slack.com/archives/C08JQ5HGWH3"
 #######################################################
 #######################################################
 
@@ -31,15 +31,15 @@ def get_block_list() -> list:
         'scheduleNo': scheduleNo
     }
     
-    response = requests.post(url,headers=header,data=body)
-    block_datas = json.loads(response.text.replace("/**/getBlockGradeSeatMapCallBack(","").replace(");", "")) 
+    response = requests.post(url, headers=header, data=body)
+    block_datas = json.loads(response.text.replace("/**/getBlockGradeSeatMapCallBack(", "").replace(");", "")) 
             
     return block_datas['seatData']['da']['sb']
     
 
 def get_remain_seat_in_block(block) -> int:
     url = "https://ticket.melon.com/tktapi/product/seat/seatMapList.json?v=1&callback=getSeatListCallBack" 
-   
+    
     body = {
         'prodId': prodId,
         'pocCode': pocCode,
@@ -48,8 +48,8 @@ def get_remain_seat_in_block(block) -> int:
         'corpCodeNo': ''
     }
 
-    response = requests.post(url,headers=header,data=body)
-    map_datas = json.loads(response.text.replace("/**/getSeatListCallBack(","").replace(");", ""))
+    response = requests.post(url, headers=header, data=body)
+    map_datas = json.loads(response.text.replace("/**/getSeatListCallBack(", "").replace(");", ""))
     count = 0
     
     if "seatData" in map_datas:
